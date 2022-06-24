@@ -3,16 +3,22 @@ import { CreateUserCaseController } from "./useCases/createUser/CreateUserCaseCo
 import { AuthenticateUserController } from "./useCases/authenticateUser/AuthenticateUserController";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
 import { RefreshTokenUserController } from "./useCases/refreshTokenUser/RefreshTokenUserControllerUseCase";
+import { CreateSecretCaseController } from "./useCases/createSecret/CreateSecretCaseController";
+import { SelectSecretUseCaseController } from "./useCases/selectSecret/SelectSecretUseCaseController"
 
 const router = Router()
 
 const createUserCaseController = new CreateUserCaseController()
+const createSecretCaseController = new CreateSecretCaseController()
 const authenticateUserController = new AuthenticateUserController()
 const refreshTokenUserController = new RefreshTokenUserController()
+const selectSecretUseCaseController = new SelectSecretUseCaseController()
 
 router.post("/users", createUserCaseController.handle)
 router.post("/login", authenticateUserController.handle)
 router.post("/refresh-token", refreshTokenUserController.handle)
+router.post("/secret", createSecretCaseController.handle)
+router.get("/secret", selectSecretUseCaseController.handle)
 
 router.get("/courses", ensureAuthenticated, (request, response)=>{
     return response.json([

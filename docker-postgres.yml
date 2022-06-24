@@ -1,0 +1,23 @@
+# Use postgres/example user/password credentials
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports: 
+      - 5432:5432    
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+#Needs: docker volume create postgres_data
+volumes:
+  postgres_data:
+    external: true

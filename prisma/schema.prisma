@@ -16,6 +16,7 @@ model User {
   username String @unique 
   password String 
   refresh_token RefreshToken?
+  secret Secret?
   @@map("users")
 }
 
@@ -26,4 +27,15 @@ model RefreshToken {
   userId  String
 
   @@map("refresh_token")
+}
+
+model Secret {
+  id String @id @default(uuid())
+  description String 
+  user  User  @relation(fields: [userId], references: [id])
+  userId  String
+  app String
+  password String 
+
+  @@map("secret")
 }
